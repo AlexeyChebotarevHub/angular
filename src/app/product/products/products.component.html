@@ -1,0 +1,49 @@
+<h2>
+    Products list
+    <button class="btn btn-success insert-button" (click) = "insertProduct()">Добавить товар</button>
+</h2>
+
+<div class="ajax-loader mt-4" [class.loader-hide]="loaded === true">
+    <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div class="is-empty-results" [class.is-empty-results-show]="loaded === true && count === 0">
+    Поиск не дал результатов!
+</div>
+
+<table class="table table-striped mt-4" [class.table-hide]="loaded === false || count === 0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products; let i = index">
+            <td>{{ product.id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.price }} тг.</td>
+            <td class="table-btn-box">
+                <a class="btn btn-primary" routerLink = "/product/{{ product.id }}">
+                    Просмотр
+                </a>
+            </td>
+            <td class="table-btn-box">
+                <button class="btn btn-info" #btnUpd (click) = "updateProduct($event, product.id)">
+                    Изменить
+                </button>
+            </td>
+            <td class="table-btn-box">
+                <button class="btn btn-danger" #btnDel (click) = "deleteProduct($event, product.id)">
+                    Удалить
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,31 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { RouterModule } from "@angular/router";
-import { routes } from './app.routes';
-import { CommonModule } from "@angular/common";
+// Services import
+import { UiService } from './_ui/ui.service';
+import { ProductService } from './_models/product.service';
 
-import { ListsModule } from "./lists/lists.module"
-import { DzModule } from "./dz/dz.module"
+// Modules import
+import { AdminModule } from './admin/admin.module';
+import { HomeModule } from './home/home.module';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonModule,
-    
-    ListsModule,
-    DzModule,
+    HttpClientModule,
 
-    RouterModule.forRoot(routes)
+    // My Modules
+    AdminModule,
+    HomeModule,
+    ProductModule,
   ],
-  providers: [],
+  providers: [UiService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

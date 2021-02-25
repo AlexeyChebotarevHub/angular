@@ -1,0 +1,22 @@
+<h2 *ngIf="product?.title" class="mb-3">
+    {{ product.title }}
+</h2>
+<a routerLink = "/products" class="mb-3"><- Вернуться к списку товаров</a>
+<div class="ajax-loader mt-4" [class.loader-hide]="loaded === true">
+    <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div class="data-list" [class.data-show]="loaded === true">
+    <ul>
+        <li>
+            <strong>Цена</strong> {{ product?.price }}тг.
+        </li>
+
+        <li>
+            <div><strong>Описание товара</strong></div> 
+            {{ product?.description }}
+        </li>
+    </ul>
+</div>

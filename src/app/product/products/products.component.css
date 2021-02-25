@@ -1,0 +1,9 @@
+.is-empty-results,
+.table-hide,
+.loader-hide { display: none; }
+
+.is-empty-results-show { display: block; }
+
+.table-btn-box { width: 1px; padding-left: 15px; }
+.btn-info { color: #fff; }
+.insert-button { float: right; }
