@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
-import { UiService } from '../../app/_ui/ui.service';
+import { UiService } from '@app/_ui/ui.service';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { Products, Product } from './Products';
-//import {  } from './Product';
-
-@Injectable({
-  providedIn: 'root',
-})
-
+@Injectable()
 export class ProductService {
 
-  url;
-  constructor(svc: UiService, private http: HttpClient) {
-    this.url = svc.url;
-  }
+  constructor(
+    private ui: UiService, 
+    private http: HttpClient) {}
 
-  products(): Promise<Products> {
-    return this.http.get<Products>(this.url('/api/products')).toPromise();
+  products(): Observable<any> {
+    return this.http.get(this.ui.url('/api/products'));
+      
   }
-  product(id:number): Promise<Product> {
-    return this.http.get<Product>(this.url('/api/product/' + id)).toPromise();
+  
+  product(id:number): Observable<any> {
+    return this.http.get(this.ui.url('/api/product/' + id));
   }
 }
 

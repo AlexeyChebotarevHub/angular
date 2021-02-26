@@ -2,7 +2,15 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ],
+      "@app/*": ["app/*"],
+      "@views/*": ["app/views/*"],
+      "@containers/*": ["app/containers/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -27,4 +35,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   }
+  //"baseUrl": "./src",
+  
 }

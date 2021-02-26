@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { ProductService } from '../../_models/product.service';
+import { ProductService } from '@app/_models/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,33 +20,29 @@ export class ProductDetailComponent implements OnInit {
   loaded:boolean = false;
 
   ngOnInit(): void {
-    this.productId = +this.activatedRoute.snapshot.params['id'];
-    this.getProduct(this.productId);
+    this.getProduct(+this.activatedRoute.snapshot.params['id']);
   }
 
   /**
-   * Получаем список товаров
+   * Получаем детали по товару
    */
   getProduct(id:number) {
-    let res = this.dataService.product(id).then(res => {
-      this.loaded = true;
-      this.product = {
-        id: res.id,
-        title: res.title,
-        price: res.price,
-        description: res.description,
-      };
-      console.log(this.product)
-   }).catch((err) => { 
-    this.badRequest = true;  
-    Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: 'Ошибка выполнения запроса',
-        text: err.message,
-        showConfirmButton: false,
-        timer: 5000
-      })
-   });
+    this.dataService.product(id).subscribe({
+      next: response => {
+        this.product = response
+      },
+      error: err => {
+        this.badRequest = true;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Ошибка выполнения запроса',
+          text: err.message,
+          showConfirmButton: false,
+          timer: 5000
+        });
+      },
+      complete: () => this.loaded = true,
+    });
   }
 }

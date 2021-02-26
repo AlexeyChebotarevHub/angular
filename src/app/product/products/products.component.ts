@@ -1,8 +1,8 @@
-import { Route } from '@angular/compiler/src/core';
+//import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
-import { ProductService } from '../../_models/product.service';
+import { ProductService } from '@app/_models/product.service';
 
 @Component({
   selector: 'app-products',
@@ -49,7 +49,6 @@ export class ProductsComponent implements OnInit {
       cancelButtonText: 'Отмена',
     }).then((result) => {
       if (result.isConfirmed) {
-        
         console.log(tr, id);
         Swal.fire('Удаление товара (потом доделаю)');
       }
@@ -60,22 +59,24 @@ export class ProductsComponent implements OnInit {
    * Получаем список товаров
    */
   getProducts() {
-    let res = this.dataService.products().then(res => {
-      this.loaded = true;
-      this.products = res.products;
-      this.count = res.count;
-   }).catch((err) => { 
-    this.badRequest = true;  
-    Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: 'Ошибка выполнения запроса',
-        text: err.message,
-        showConfirmButton: false,
-        timer: 5000
-      })
-   });
-    
+    this.dataService.products().subscribe({
+      next: response => {
+        this.products = response.products;
+        this.count = response.count;
+      },
+      error: err => {
+        this.badRequest = true;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Ошибка выполнения запроса',
+          text: err.message,
+          showConfirmButton: false,
+          timer: 5000
+        });
+      },
+      complete: () => this.loaded = true,
+    });
   }
 
   ngOnInit(): void {
